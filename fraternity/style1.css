@@ -1,0 +1,179 @@
+body
+{background-image:url("images/backp.gif"); 
+
+}
+
+#center
+{padding:30px;
+position:absolute;
+background-color:#006666;
+top:100px;
+left:100px;
+bottom:10px;
+width:80%;
+border:1px #9dbbc6 solid;
+font-size:20px;
+}
+
+.search input, .search button {
+	border:none;
+	float: left;
+}
+.search input.box {
+	color: #fff;
+	font-size: 1.2em;
+	width: 290px;
+	height: 30px;
+	padding: 8px 5px 0;
+	background: #616161;
+	margin: 5px;
+}
+
+.search button.btn {
+margin:5px;
+	width: 38px;
+	height: 38px;
+	cursor: pointer;
+	text-indent: -9999px;
+	background:url(images/search.jpg) no-repeat top right;
+}
+. input, .button {
+	border: none;
+	float: left;
+}
+. input.box {
+	color: #fff;
+	font-size: 1.2em;
+	width: 290px;
+	height: 30px;
+	padding: 8px 5px 0;
+	background: #616161;
+	margin-right: 5px;
+}
+
+#toppanel {
+	position: fixed;
+	top: 0; left: 0px;
+	z-index: 9999; /*--Keeps the panel on top of all other elements--*/
+	background-color:#999999;
+	border: 1px solid #000000
+	border-top: none;
+	height:8%;
+	width: 93%;
+	margin: 0 3%;
+}
+#toppanel ul {
+	padding: 0; margin: 0;
+	float: left;
+	width: 100%;
+	list-style: none;
+	border-top: 1px solid #fff; /*--Gives the bevel feel on the panel--*/
+	font-size: 1.1em;
+}
+#toppanel ul li{
+	padding: 0; margin: 0;
+	float: left;
+	position: relative;
+}
+#toppanel ul li a{
+	padding: 5px;
+	float: left;
+	text-indent: -9999px; /*--For text replacement - Shove text off of the page--*/
+	height: 45px; width: 45px;
+	text-decoration: none;
+	color: #333;
+	position: relative;
+}
+#toppanel ul li a:hover{	background-color: #fff; }
+#toppanel ul li a.active { /*--Active state when sub-panel is open--*/
+	background-color: #fff;
+	height: 30px;
+	margin-bottom:-2px; /*--Push it up 2px to attach the active button to sub-panel--*/
+	border: 1px solid #bbb;
+	border-bottom: none;	
+	position: relative;
+}
+a.profile{ background: url(images/icons/user.png) no-repeat center center;}
+a.editprofile{ background: url(images/icons/settings.png) no-repeat center center; }
+a.fraternity{ background: url(images/icons/fraternity.png) no-repeat center center; }
+a.messages{ background: url(images/icons/messages.png) no-repeat center center; }
+a.photos{ background: url(images/icons/photos.png) no-repeat center center; }
+a.updates{ background: url(images/icons/mail.png) no-repeat center center; }
+a.logout{ background: url(images/icons/logout.png) no-repeat center center; }
+a.documents{ background: url(images/icons/notes.png) no-repeat center center; }
+a.events{ background: url(images/icons/calendar.png) no-repeat center center; }
+#toppanel a.chat{
+	
+	width: 126px;
+	height:30px;;
+	border: 1px solid #bbb;
+	border-top:none;
+	padding-left: 40px;
+	text-indent: 0; /*--Reset text indent since there will be a combination of both text and image--*/
+}
+#chatpanel {	float: right; }  /*--Right align the chat panel--*/
+#toppanel ul li div a { /*--Reset link style for subpanel links--*/
+	text-indent: 0;
+	width: auto;
+	height:auto;
+	padding: 0;
+	float: none;
+	color: #00629a;
+	position: static;
+}
+
+#toppanel .subpanel {
+	position: absolute;
+	left: 0; top: 30px;
+	display: none;	/*--Hide by default--*/
+	width: 198px;
+	border: 1px solid #555;
+	background: #fff;
+	overflow: hidden;
+	padding-bottom: 2px;
+}
+
+#toppanel .subpanel li{ 
+	float: none; /*--Reset float--*/
+	display: block;
+	padding: 0; margin: 0;
+	overflow: hidden;
+	clear: both;
+	background: #fff;
+	position: static;  /*--Reset relative positioning--*/
+	font-size: 0.9em;
+}
+
+
+#chatpanel .subpanel li a{
+	padding: 3px 0;	
+	margin: 0;
+	line-height: 22px;
+	height: 22px;
+	background: #fff;
+	display: block;
+}
+#chatpanel .subpanel li a:hover {
+	background: #CCCCCC;
+	color:#006699;
+	text-decoration: none;
+}
+
+
+#toppanel a small {
+	text-align: left;
+	width: 100px;
+	padding: 5px 5px 11px;
+	display: none; /*--Hide by default--*/
+	color: #fff;
+	font-size: 1em;
+	text-indent: 0;
+}
+#toppanel a:hover small{
+	display: block; /*--Show on hover--*/
+	position: absolute;
+	bottom: -35px; /*--Position tooltip 35px above the list item--*/
+	left: 50%;
+	margin-left: -40px; /*--Center the tooltip--*/
+	z-index: 9999;
+}

@@ -1,0 +1,106 @@
+body
+{background-image:url("images/back.jpg");
+ font-family:"Lucida Grande", arial, sans-serif; 
+
+}
+#center
+{position:absolute;
+top:180px;
+left:100px;
+
+}
+img.logo
+{
+-webkit-border-radius:80px;
+-moz-border-radius:80px;
+-webkit-box-shadow:5px 5px 7px #333;
+}
+
+#date
+{
+-webkit-transform: rotate(-90deg); 
+-moz-transform: rotate(-90deg);	
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+#sidebar
+{position:absolute;
+background-color:rgba(0,118,160,.25);
+top:100px;
+left:1000px;
+width:300px;
+border:1px #9dbbc6 solid;
+ font-family:"Lucida Grande", arial, sans-serif; 
+}
+input.bar
+{width:153px;
+height:18px;
+background: #222;
+border-radius:20px;
+color:#000;
+-webkit-border-radius:10px;
+-moz-border-radius:20px;
+margin:2px;
+}
+fieldset.search {
+	border: none;
+	width: 350px;
+	margin: 0 auto;
+	background: #222;
+}
+.search input, .search button {
+	border: none;
+	float: left;
+}
+.search input.box {
+	color: #fff;
+	font-size: 1.2em;
+	width: 290px;
+	height: 30px;
+	padding: 8px 5px 0;
+	background: #616161 url(search_bg.gif) no-repeat;
+	margin-right: 5px;
+}
+
+.search button.btn {
+	width: 38px;
+	height: 38px;
+	cursor: pointer;
+	text-indent: -9999px;
+	background:url(images/search.jpg) no-repeat;
+}
+#tabnavigation { position:absolute;
+top:12px;
+left:205px;
+font-family:Georgia, "Times New Roman", Times, serif;
+ font-weight:bold; 
+ letter-spacing:-0em; 
+ width:700px; 
+ height:60px;  
+ border-bottom:1px solid #DEDEDE; 
+ margin-top:20px;
+}
+ 
+#tabnavigation ul { list-style-type: none; }
+ 
+#tabnavigation li{ display: inline; margin: 0; }
+ 
+#tabnavigation li a {
+ background:url(images/normal.jpg); 
+text-decoration:none; 
+color:#669999;
+ float:left; 
+ border:1px 
+ solid #DEDEDE;  
+ padding:15px 35px 15px 35px; 
+ margin-right:10px; }
+ 
+#tabnavigation li a:hover { height:26px; margin-top:-7px; 
+color:#990000; 
+background:url(images/selected.jpg); 
+}
+ 
+/* Description tabs styling */
+ 
+.description ul li ul { display: none; }
+ 
+.description ul li:hover ul { font-style:italic; font-size:16px; display:block; position:absolute; top:85px; position:absolute; left:0; }
