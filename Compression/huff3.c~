@@ -1,0 +1,282 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+int fsize(char *name)
+{
+
+    int fd=0;
+    if((fd=open(name,O_RDONLY)) < -1)
+            printf("Unable to open");
+            
+    struct stat fileStat;
+    if(fstat(fd,&fileStat) < 0)    
+        printf("Unable to fstat");
+	close(fd);
+    return fileStat.st_size;
+}
+struct node
+{
+char c;
+long f;
+struct node *left;
+struct node *right;
+};
+struct fnode{
+char c;
+int valid;
+}ftemp;
+int nodeno;
+void rec(struct node *,FILE *);
+int nbits, current_byte, nbytes;
+void swap(struct node*,int ,int );
+void heapsort(struct node *A,int);
+void heapify(struct node *,int);
+int heapsize=256;
+void buildheap(struct node *);
+struct node *extract_min(struct node *);
+void insert_node(struct node *A,struct node b);
+void inorder(struct node *a);
+void encode_file (FILE *infile, FILE *outfile, char *codes[]);
+void bitout (FILE *f, char b);
+void code_gen(struct node *n,int level, char code[],char *codes[]) ;
+int x1;
+int main(int argc,char *argv[])
+{	
+	if(argc==3){
+	struct stat statbuf;
+	lstat(argv[1],&statbuf);
+	if(S_ISDIR(statbuf.st_mode))
+	{ printf("Argument 1 is not a file");
+	exit(0);
+	}
+	lstat(argv[2],&statbuf);
+	if(!S_ISDIR(statbuf.st_mode)) 
+	{ printf("Argument 2 is not a directory");
+	exit(0);
+	}
+	
+	FILE *fp;
+	int  i,n;
+	fp=fopen(argv[1],"rb");
+	char a;
+	double outsize;
+	double insize=fsize(argv[1]);
+	struct node heap[256];
+	for(i=0;i<256;i++)
+	{ heap[i].c=(char)i; heap[i].f=0; heap[i].left=NULL; heap[i].right=NULL;} 
+	while(!feof(fp)){
+		a = fgetc (fp);
+		n=(int)a;
+		if(n<0) n=256+n;
+			heap[n].f++;				 	
+		}
+	buildheap(heap);
+	while(heap[0].f==0)
+	{	extract_min(heap);
+	}
+	nodeno=heapsize+heapsize*2;
+		for(i=0;i<heapsize;i++);
+		struct node *f,*t,x;
+		int r=0;
+		while(heapsize!=1)
+		{	r++;	
+			f=extract_min(heap);
+			t=extract_min(heap);
+			x.c='#';
+			x.f=f->f+t->f;
+			x.left=f;
+			x.right=t;
+			insert_node(heap,x);					
+			nodeno++;
+	}
+	char *codes[256],code[256];
+	for(i=0;i<256;i++)
+	codes[i]=NULL;
+	code_gen(heap,0,code,codes);
+	int j=1;
+	rewind(fp);	
+	FILE *out;
+	char ch[100];
+	strcpy(ch,argv[2]);
+	strcat(ch,"/");
+	strcat(ch,argv[1]);
+	strcat(ch,".ma2");
+	out=fopen(ch,"w+");
+	struct fnode write;
+	fprintf(out,"%d ",nodeno);
+	if(heap!=NULL)
+	{
+	rec(heap,out);
+	encode_file(fp,out,codes);
+	}
+	fclose(fp);
+	fclose(out);
+	outsize=fsize(ch);
+	char z='%';
+	if(outsize<insize) { printf(" inpitfile size = %f , outputfile size = %f \n",insize,outsize);printf("Compression Done  %f %c",(outsize/insize)*100,z);}
+	else {printf("File is Not Compressed"); remove(ch);}}
+	if(argc==2){ printf(" NO Output Directory is given ");}
+	else { printf(" NO File input is given ");}
+return 0;
+}
+
+void inorder(struct node *a)	
+{ if(a!=NULL)
+	{ inorder(a->left);
+	inorder(a->right);
+	}
+
+}
+
+void buildheap(struct node *A)
+{ int i,q=heapsize;
+for(i=(q/2-1);i>=0;i--)
+heapify(A,i);
+}
+void heapify(struct node *A,int i)
+{int min;
+int l=2*i+1;
+int m=2*i+2;
+if(l<heapsize&&A[l].f<A[i].f)
+min=l;
+else min=i;
+if(m<heapsize&&A[m].f<A[min].f)
+min=m;
+if(min!=i){
+swap(A,i,min);
+heapify(A,min);
+}
+}
+void swap(struct node *a,int i,int j)
+{struct node temp;
+temp=a[i];
+a[i]=a[j];
+a[j]=temp;
+}
+struct node *extract_min(struct node *a)
+{	 	
+	swap(a,0,heapsize-1);
+	heapsize--;
+	heapify(a,0);
+	int i;
+ 	struct node *n=(struct node *)malloc(sizeof(struct node));
+	n->c=a[heapsize].c;
+	n->f=a[heapsize].f;
+	n->left=a[heapsize].left;
+	n->right=a[heapsize].right;
+	return n;
+}
+void insert_node(struct node *A,struct node x)
+{	heapsize++;
+	int i = heapsize-1;
+	while ((i > 0) && (A[(i-1)/2].f > x.f)) {
+A[i] = A[(i-1)/2];
+i = (i-1)/2;
+}
+A[i] = x;
+
+}
+
+
+void code_gen(struct node *n,int level, char code[],char *codes[]) 
+{
+	if ((n->left == NULL) && (n->right == NULL)) 
+	{
+		code[level] = '\0';
+		x1=(int)n->c;	
+		if(x1<0) x1=256+x1; 
+		codes[x1] = strdup (code);
+	}
+	else {
+	code[level] = '0';
+	code_gen(n->left, level+1, code, codes);
+	code[level] = '1';
+	code_gen(n->right, level+1, code, codes);
+}
+}
+
+void encode_file (FILE *infile, FILE *outfile, char *codes[])
+{
+unsigned char ch;
+char *s;
+
+/* initialize globals for bitout() */
+
+current_byte = 0;
+nbits = 0;
+nbytes = 0;
+int x;
+/* continue until end of file */
+
+for (;;) {
+
+/* get a char */
+
+x =(int) fgetc (infile);
+if (feof (infile)) break;
+//printf("%d",x);
+/* put the corresponding bitstring on outfile */
+for (s=codes[x]; *s!='\0'; s++) bitout (outfile, *s);
+}
+
+/* finish off the last byte */
+
+while (nbits) bitout (outfile, '0');
+}
+
+void bitout (FILE *f, char b) {
+
+/* shift current byte left one */
+
+current_byte<<=1;
+
+/* put a one on the end of this byte if b is '1' */
+
+if (b == '1') current_byte |= 1;
+
+/* one more bit */
+
+nbits++;
+
+/* enough bits? write out the byte */
+
+if (nbits == 8) {
+//printf("%d ",current_byte);
+fputc(current_byte, f);
+nbytes++;
+nbits = 0;
+current_byte = 0;
+}
+}
+
+void rec(struct node *temp,FILE *fp){
+	if(temp!=NULL)
+	{	ftemp.c='(';
+		ftemp.valid=0;
+		//printf("%c",ftemp.c);
+		fwrite(&ftemp,sizeof(struct fnode),1,fp);
+		rec(temp->left,fp);
+		ftemp.c=temp->c;
+		ftemp.valid=1;
+		//printf("%c",ftemp.c);
+		fwrite(&ftemp,sizeof(struct fnode),1,fp);
+		rec(temp->right,fp);
+		ftemp.c=')';
+		ftemp.valid=0;
+		//printf("%c",ftemp.c);
+		fwrite(&ftemp,sizeof(struct fnode),1,fp);
+	}
+	else
+	{	 ftemp.c='0';
+		ftemp.valid=0;
+		//printf("%c",ftemp.c);
+		fwrite(&ftemp,sizeof(struct fnode),1,fp);
+	}
+}
+
+
