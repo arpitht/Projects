@@ -1,0 +1,26 @@
+decl
+int x;
+int c[10];
+int sort(int a);
+enddecl
+int main()
+{decl
+int z;
+enddecl
+begin
+z=5;
+c[z]=19;
+z=sort(c[z]);
+end
+}
+int sort(int a)
+{decl
+int z;
+enddecl
+begin
+z=a;
+write(z);
+return z+1;
+end
+}
+

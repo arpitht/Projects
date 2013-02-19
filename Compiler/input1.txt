@@ -1,0 +1,48 @@
+decl
+int c[10];
+int x;
+int sort(int a);
+enddecl
+int main()
+{decl
+int a;
+enddecl
+begin
+read(a);
+sort(a);
+end
+}
+int sort(int a)
+{decl
+int z;
+int t;
+int y;
+enddecl
+begin
+x=0;
+while(x<a)
+read(c[x]);
+x=x+1;
+z=0;
+endwhile
+while(x>0)
+while(z<x)
+y=z+1;
+if(c[z]>c[y])
+then
+write(x);
+endif
+z=z+1;
+endwhile
+z=0;
+x=x-1;
+endwhile
+x=0;
+while(x<a)
+write(c[x]);
+x=x+1;
+endwhile
+end
+}
+
+
