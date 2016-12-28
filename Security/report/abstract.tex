@@ -1,0 +1,18 @@
+\chapter{Introduction}
+\par Extensions are small software programs that can modify and enhance the functionality of the web browser \cite{chromegetstarted}. Browser extensions have access to everything done by the browser, and can do things like inject ads into webpages, or make "background" HTTP requests to a third-party server. This power can be abused by browser extensions; while Web pages are constrained by the security model of the Web, extensions are not.
+
+
+\par For this project we have created a malicious  browser extension with functionalities listed below. We picked Google Chrome for our development purpose as it has the highest share of users globally \cite{topbrowserusage}. The functionalities implemented here can be easily extended to other web browsers.
+
+Functionalities: 
+\begin{itemize}
+  \item Leak browsing history of a user to our server.
+  \item Steal usernames and passwords from forms as the user writes them.
+  \item Steal cookies from outgoing HTTP requests.
+  \item Reroute user from security websites to random websites. The list of such websites being dynamically updatable.
+  \item Dynamic insertion of DOM Objects in a users web page, which can be used for personalised phishing.
+  \item Dynamic insertion of Javascript Objects to steal user information from a web page of choice.
+\end{itemize}
+
+
+The development has been done using web technologies such as HTML, JavaScript, and CSS. We provide below with the structure of our Client and Server side system, along with the Design and Architecture we have followed to develop our extension.

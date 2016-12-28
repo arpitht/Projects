@@ -1,0 +1,27 @@
+\chapter{Design}
+\section{Useful Functionality}
+It is important that our extension provides some useful functionality in order to both convince users to install our extension and to hide the malicious nature of the extension. We did a quick survey of popular extensions on Chrome Store and found that extensions which replace the new tab page with a dashboard are quite popular. So we decided to create an extension which replaces the new tab page with a custom page that displays a daily motivational quote along with a nice background image every time a user opens a new tab.
+
+\section{General Design considerations}
+We want to uniquely identify users when their data is sent to the server. So we generate a user-id when the extension is first installed and store it in Chrome Sync storage . This user-id is sent along with every request to the server. We also store the extension-id, which is necessary to communicate between webpages and the extension.
+
+\section{Leak the browsing history of a user to the attacker's server}
+Chrome provides an api chrome.history.search which retrieves the history of the user given a query parameter.  We use it to get all the history of the user when the extension is first installed and send it to the server, afterwards every time the user visits a new page, we send the corresponding url and the timestamp in epoch to the server.  History is stored as a json object containing the timestamp followed by the visited url.
+
+\section{Steal usernames and passwords from forms as the user writes them}
+The extension listens to the event chrome.webNavigation.onCompleted and on event trigger, it checks if the webpage contains any form with the tag ‘password’. If a matching form is found then we add an event listener to log keystrokes for each of the input fields in this form. This data is sent to the extension which eventually saves it to the server.
+
+\section{Steal cookies from outgoing HTTP requests}
+We have added a listener that gets invoked every time a header is created and sent. We inspect the header to check if it contains a cookie field, and if so we save it in the server along with the website name.
+
+\section{Stop the user from visiting security websites and reroute them to random websites}
+There is a mapping of security urls and the corresponding reroute urls stored in the server. We sync this information with our local chrome storage every minute. Each time a new request is generated, we intercept the request, extract the request url and compare it with our blacklist of security websites, and if it matches we reroute the user to a different web-page.
+
+\section{Personalized Phishing} 
+DOM Object Insertion:  For each user, we store a mapping of the website and the DOM object to be inserted. This information is retrieved on every user web request. If the user requested a page in our mapping then we add our custom DOM to the DOM of the requested page.
+
+\section{JavaScript execution}
+Javascript insertion: Similar to DOM mapping, we store a mapping of the website and the javascript to be executed for each user.  This information is retrieved on every user web request and executed on the tab that is requesting this information using the eval function.
+
+\section{Communication with Web Pages}
+As part of supported functionalities, we need a medium of communication between the pages of the extension and also between a webpage and the extension. We use the chrome APIs chrome.runtime.onConnect/onConnectExternal and port.onMessage to establish a communication channel between two parties, which is essential is use-cases such as phishing/stealing user data from a website.

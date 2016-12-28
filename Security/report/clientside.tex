@@ -1,0 +1,13 @@
+\chapter{Client Side}
+\section{Components}
+\subsection{The Manifest File}
+The manifest file, called manifest.json, gives information about the extension, such as the most important files and the capabilities that the extension might use. 
+\subsection{The Background Page}
+Background page of our extension is an invisible page that holds the main logic and control of the extension.
+This includes all the listeners to different types of events in Javascript to act according to our features.
+
+\subsection{UI Pages}
+Extensions can contain ordinary HTML pages that display the extension's UI. For example, a browser action can have a popup, which is implemented by an HTML file. In our case, we keep no UI for the extension to keep it inconspicuous but we instead provide a good user functionality which is popular on the Chrome store.
+
+\subsection{Content Scripts}
+A content script is some JavaScript that executes in the context of a page that's been loaded into the browser. Content scripts can read details of the web pages the browser visits, and they can make changes to the pages. This behavior of content scripts makes them an integral part of our implementation.

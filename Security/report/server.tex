@@ -1,0 +1,22 @@
+\chapter{Server side}
+\section{Components}
+
+\subsection{Elasticsearch} 
+Elasticsearch is a distributed, RESTful search and analytics engine capable of solving a growing number of use cases.
+
+\subsection{Kibana} 
+Kibana is an open source analytics and visualization platform designed to work with Elasticsearch.
+
+\subsection{X-Pack Security} 
+X-Pack security features give the right access to the right people.
+
+\subsection{Sense} 
+Sense is a handy console for interacting with the REST API of Elasticsearch.
+
+\section{Usage}
+To store the information extracted from the client and extension configurations, we use elasticsearch. The main reason behind using elasticsearch is that it provides fast read/writes, it’s highly scalable, distributed and provides an inbuilt REST interface for interaction. 
+
+
+We also use Kibana to visualize the data which is the dashboarding that comes with elasticsearch. Both of these above technologies are combined with X-Pack Security so as to protect them against any un-authorized usage. Native elasticsearch and kibana do not have an inbuilt authentication module, making them insecure for usage, hence Shield needs to be integrated with them to compensate for the lack in security. 
+
+Sense plugin within kibana has been used as a REST client to update and extract data to/from  elasticsearch. Since elasticsearch provides REST interface, Sense could easily be replaced by another REST client e.g., Postman, curl, etc. 
